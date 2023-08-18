@@ -15,6 +15,23 @@ function App() {
 
     setItem(""); // Clear the input field after submitting
   }
+  function toggleTodo(id, completed){
+
+    setTodos(current=>{
+      return current.map(todo=>{
+        if(todo.id===id){
+          return {...todo, completed: completed}
+        }
+        return todo
+      })
+    })
+  }
+
+  function deleteTodo(id){
+    setTodos(current=>{
+      return current.filter(todo => todo.id !==id)
+    })
+  }
 
   return (
     <>
@@ -40,10 +57,11 @@ function App() {
                 checked={todo.completed}
                 name=""
                 id=""
+                onChange={e => toggleTodo(todo.id, e.target.checked)}
               />
               {todo.title}
             </label>
-            <button className="btn btn-danger">Delete</button>
+            <button className="btn btn-danger" on onClick={() => deleteTodo(todo.id)}>Delete</button>
           </li>
         ))}
       </ul>
